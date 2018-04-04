@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Timer</title>
+		<!-- Bootstrap CDN link -->
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+		<!-- Roboto font import from Google Fonts. -->
+		<link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab" rel="stylesheet">
+
+		<style>
+			body {
+				font-family: 'Roboto';
+				background:#343a40;
+			}
+
+			label {
+				color:#DDD;
+				font-size:6em;
+			}
+
+			.timer {
+				width: 30%;
+				margin:15% 35%;
+				text-align: center;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		
+		<script>
+			
+			var hour=0, minute=0, second=0;
+			var started = false;
+
+			/*
+			Simple onload to force an initial update of the Timer View
+			*/
+			window.onload = function() {
+				updateTimerView();
+			}
+
+			/*
+			Toggles the start/stop functionality to start/stop the timer
+			*/
+			function startStop() {
+				started = !started;
+				updateButtonText(started);
+				timer();
+			}
+
+			/*
+			Resets the Timer App
+			*/
+			function reset() {
+				started = false;
+				hour = 0;
+				minute = 0;
+				second = 0;
+				updateTimerView();
+				updateButtonText(false);
+			}
+
+			/*
+			Function implementing the timer algorithm
+			*/
+			function timer() {
+				if(started) {
+					if(second < 59) {
+						second++;
+					} else {
+						if(minute < 59) {
+							minute++;
+							
+						} else {
+							if(hour < 23) {
+								hour++;
+								minute = 0
+							} else {
+								startStop();
+							}
+						}
+						second = 0;
+					}
+					updateTimerView();
+					setTimeout(timer, 1000);
+				}			
+			}
+
+			/*
+			Updates the HTML view
+			*/
+			function updateTimerView() {
+				document.getElementById('hour').innerHTML = formatNumber(hour);
+				document.getElementById('minute').innerHTML = formatNumber(minute);
+				document.getElementById('second').innerHTML = formatNumber(second);
+			}
+
+			/*
+			Formats a number to a String value with a prefixed '0' if the value is below 10
+			*/
+			function formatNumber(number) {
+				var result;
+				if(number < 10) {
+					result = ("0" + number);
+				} else {
+					result = ("" + number);
+				}
+				return result;
+			}
+
+			/*
+			Updates the Start/Stop button with the correct text based on the state of the Timer
+			*/
+			function updateButtonText(startedBoolean) {
+				var buttonText = '';
+
+				if(startedBoolean) {
+					buttonText = 'Stop';
+				} else {
+					buttonText = 'Start';
+				}
+
+				document.getElementById('startStopButton').innerHTML = buttonText;
+			}
+
+		</script>
+	
+
+		<div class="timer">
+			<div id="HMSOutput">
+				<label id="hour"></label>
+				<label>:</label>
+				<label id="minute"></label>
+				<label>:</label>
+				<label id="second"></label>
+			</div>
+			
+			<button id="startStopButton" onclick="startStop()" class="btn">Start</button>
+			<button id="resetButton" onclick="reset()" class="btn">Reset</button>
+		</div>
+
+
+	</body>
+
+</html>
