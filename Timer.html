@@ -11,19 +11,30 @@
 		<link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab" rel="stylesheet">
 
 		<style>
+
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
 			body {
 				font-family: 'Roboto';
 				background:#343a40;
+				color:#DDD;
+			}
+
+			.wrapper {
+				width: 100%;
+				height: auto;
+				overflow:hidden;
 			}
 
 			label {
-				color:#DDD;
 				font-size:6em;
 			}
 
 			.timer {
-				width: 30%;
-				margin:15% 35%;
+				margin-top: 15%;
 				text-align: center;
 			}
 		</style>
@@ -36,6 +47,7 @@
 			
 			var hour=0, minute=0, second=0;
 			var started = false;
+			var lapTimes = [];
 
 			/*
 			Simple onload to force an initial update of the Timer View
@@ -129,21 +141,21 @@
 			}
 
 		</script>
-	
 
-		<div class="timer">
-			<div id="HMSOutput">
-				<label id="hour"></label>
-				<label>:</label>
-				<label id="minute"></label>
-				<label>:</label>
-				<label id="second"></label>
-			</div>
-			
-			<button id="startStopButton" onclick="startStop()" class="btn">Start</button>
-			<button id="resetButton" onclick="reset()" class="btn">Reset</button>
-		</div>
-
+		<div class="wrapper">
+			<article class="timer">
+				<div id="timerContainer">
+					<label id="hour"></label>
+					<label>:</label>
+					<label id="minute"></label>
+					<label>:</label>
+					<label id="second"></label>
+				</div>
+				
+				<button id="startStopButton" onclick="startStop()" class="btn" autofocus>Start</button>
+				<button id="resetButton" onclick="reset()" class="btn">Reset</button>
+			</article>			
+		</div>	
 
 	</body>
 
